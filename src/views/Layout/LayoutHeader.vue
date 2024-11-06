@@ -1,23 +1,14 @@
 <script setup>
 import { ref,onMounted } from 'vue'
-import { getCategoryApi } from '@/api/layout'
+import { useCategoryStore } from '@/stores/category'
 
-let categoryList = ref([]);
-const getCategory = async () => {
-  await getCategoryApi().then(res => {
-    console.log(res.result);
-    categoryList.value = res.result;
-  })
-}
+const categoryList = useCategoryStore().categoryList;
 
 let navIndex = ref(null);
 const activeClass = (index) => {
   navIndex.value = index;
 }
 
-onMounted(() => {
-  getCategory();
-})
 </script>
 
 <template>
