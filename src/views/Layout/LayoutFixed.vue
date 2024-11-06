@@ -1,14 +1,20 @@
 <script setup>
-import { ref } from 'vue'
 import { useScroll } from '@vueuse/core';
 import { useCategoryStore } from '@/stores/category'
 
 const categoryList = useCategoryStore().categoryList;
 
-let navIndex = ref(null);
+const prop = defineProps({
+  navIndex: {
+    type: Number,
+  }
+});
+const emit = defineEmits(['changeIndex']);
 const activeClass = (index) => {
-  navIndex.value = index;
-}
+  console.log(index);
+  
+  emit('changeIndex', index);
+};
 
 let {y} = useScroll(window);
 
@@ -25,7 +31,7 @@ let {y} = useScroll(window);
             :key="index" 
             @click="activeClass(index)"
         > 
-            <RouterLink :class="{'active':navIndex === index,'home': index === 0}" to="/">{{ item.name }}</RouterLink> 
+            <RouterLink :class="{'active':navIndex === index,'home': index === 0}" :to="`/category/${item.id}`">{{ item.name }}</RouterLink> 
         </li>
         <!-- <li class="home">
           <RouterLink to="/">首页</RouterLink>

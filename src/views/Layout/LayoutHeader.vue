@@ -1,13 +1,18 @@
 <script setup>
-import { ref,onMounted } from 'vue'
 import { useCategoryStore } from '@/stores/category'
 
 const categoryList = useCategoryStore().categoryList;
-
-let navIndex = ref(null);
+const prop = defineProps({
+  navIndex: {
+    type: Number,
+  }
+});
+const emit = defineEmits(['changeIndex']);
 const activeClass = (index) => {
-  navIndex.value = index;
-}
+  console.log(index);
+  
+  emit('changeIndex', index);
+};
 
 </script>
 
@@ -23,14 +28,8 @@ const activeClass = (index) => {
             :key="index" 
             @click="activeClass(index)"
             > 
-            <RouterLink :class="{'active':navIndex === index,'home': index === 0}" to="/">{{ item.name }}</RouterLink> 
+            <RouterLink :class="{'active':navIndex === index,'home': index === 0}" :to="`/category/${item.id}`">{{ item.name }}</RouterLink> 
           </li>
-          <!-- <li class="home">
-            <RouterLink to="/">首页</RouterLink>
-          </li>
-          <li> <RouterLink to="/">居家</RouterLink> </li>
-          <li> <RouterLink to="/">美食</RouterLink> </li>
-          <li> <RouterLink to="/">服饰</RouterLink> </li> -->
         </ul>
         <div class="search">
           <i class="iconfont icon-search"></i>
