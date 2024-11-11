@@ -10,3 +10,12 @@ export const LoginApi = ({account,password}) => {
         }
     })
 }
+
+export const getLikeListApi = ({ limit = 4 }) => {
+    return instance({
+      url:'/goods/relevant',
+      params: {
+        limit 
+      }
+    })
+  }

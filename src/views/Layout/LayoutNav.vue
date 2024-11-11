@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
 const { user } = storeToRefs(useUserStore());
-const { getUserInfo,logout } = useUserStore();
+const { logout } = useUserStore();
 const router = useRouter();
 const setOut = () => {
     logout();
@@ -16,12 +16,12 @@ const setOut = () => {
     <nav class="app-topnav">
         <div class="container">
             <ul>
-                <template v-if="user.id">
+                <template v-if="user.token">
                     <li><a href="javascript:;"><i class=" iconfont icon-user"></i>{{ user.nickname }}</a></li>
                     <li>
-                        <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+                        <el-popconfirm @confirm="setOut" title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
                             <template #reference>
-                                <a href="javascript:;" @click="setOut">退出登录</a>
+                                <a href="javascript:;">退出登录</a>
                             </template>
                         </el-popconfirm>
                     </li>
